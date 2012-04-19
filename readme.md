@@ -1,3 +1,3 @@
-.h1 Utilities included
+# Utilities included #
 
  * org.hsqldb.util.ShutdownServer
