@@ -17,7 +17,7 @@ import org.apache.hadoop.io.IOUtils
 
 import net.htmlparser.jericho.Source
 
-case class PageKeywords(val url: String, val content: String)
+case class Product(val id: String, val name: String)
 
 object PageKeywords2SequenceFile {
 
@@ -25,19 +25,19 @@ object PageKeywords2SequenceFile {
 
   val mongoConn = MongoConnection()
   val mongoDB = mongoConn(DB_NAME)
-  val aaliColl = mongoConn(DB_NAME)("AssignableAffiliateLinkImpl")
-  val q : MongoDBObject = ("pageKeywords.html" $exists true ) ++ ("affiliateNetwork" -> "ZANOX")
+  val aaliColl = mongoConn(DB_NAME)("Product")
+  val q : MongoDBObject = ("name" $exists true )
   val pageKeywordsCursor = aaliColl.find(q)
 
   def export() {
-    val writer = sequenceFileWriter("/tmp/yieldkit/seq/PageKeywords.seq")
+    val writer = sequenceFileWriter("/Users/razvan/yieldkit/data/analysis/seq/Product.seq")
     val k = new Text()
     val v = new Text()
     pageKeywordsCursor.foreach {
       aali =>
         val pk = getPageKeywords(aali)
-        k.set(pk.url)
-        v.set(pk.content)
+        k.set(pk.id)
+        v.set(pk.name)
         writer.append(k, v)
     }
     IOUtils.closeStream(writer)
@@ -51,10 +51,9 @@ object PageKeywords2SequenceFile {
     return SequenceFile.createWriter(fs, conf, path, text.getClass(), text.getClass())
   }
 
-  def getPageKeywords(o: DBObject): PageKeywords = {
-    val pk = o.getAs[BasicDBObject]("pageKeywords").get
+  def getPageKeywords(o: DBObject): Product = {
 
-    return PageKeywords(pk.getAs[String]("targetUrl").get, extractContent(o.getAs[String]("html").get))
+    return Product(o.getAs[ObjectId]("_id").get.toString, o.getAs[String]("name").get)
   }
 
   def extractContent(html: String):String = {
