@@ -27,7 +27,7 @@ def map_dfreq(filename):
 					output[word] = output[word] + 1
 				doc_terms = set()
 			else:
-				doc_terms = doc_terms | set([word.lower() for word in re.split('[,.:;|!?/"()\[\]\-\s\t]+', line) if word.isalpha()])
+				doc_terms = doc_terms | set([word.lower() for word in re.split('[,.:;|!?/"()\[\]\-\s\t]+', line) if word.decode("utf-8").isalpha()])
 
 	if doc_terms:
 		for word in doc_terms:
