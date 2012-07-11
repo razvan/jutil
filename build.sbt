@@ -13,3 +13,5 @@ libraryDependencies += "org.hsqldb" % "hsqldb" % "2.2.8"
 libraryDependencies += "org.apache.hadoop" % "hadoop-core" % "1.0.3"
 
 libraryDependencies += "net.htmlparser.jericho" % "jericho-html" % "3.2"
+
+libraryDependencies += "com.google.guava" % "guava" % "10.0.1"
