@@ -36,7 +36,7 @@ object Mongo2Seq {
 
   def sequenceFileWriter(location: String): SequenceFile.Writer = {
     val conf = new Configuration()
-    conf.set("io.compression.codecs", "org.apache.hadoop.io.compress.GzipCodec")
+    conf.set("io.compression.codecs", "org.apache.hadoop.io.compress.GzipCodec,org.apache.hadoop.io.compress.DefaultCodec")
     val fs = FileSystem.get(URI.create(location), conf)
     val path = new Path(location)
     val text = new Text()
