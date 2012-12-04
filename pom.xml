@@ -55,5 +55,10 @@
           <artifactId>mahout-core</artifactId>
           <version>0.7</version>
       </dependency>
+      <dependency>
+          <groupId>org.codehaus.jackson</groupId>
+          <artifactId>jackson-mapper-asl</artifactId>
+          <version>1.9.11</version>
+      </dependency>
   </dependencies>
 </project>
